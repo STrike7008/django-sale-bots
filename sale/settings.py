@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'order',
     'crispy_forms',
     'crispy_bootstrap5',
+    'faq',
 ]
 
 MIDDLEWARE = [
