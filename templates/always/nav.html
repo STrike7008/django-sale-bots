@@ -1,0 +1,77 @@
+<header class="bg-white shadow-sm">
+  <nav class="navbar navbar-expand-lg navbar-light container">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <i class="fa-solid fa-robot fa-xl text-primary"></i>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center w-100 justify-content-lg-end">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'cart:cart_detail' %}">
+            <i class="fa-solid fa-cart-shopping fa-fade" style="animation-duration: 2s;"></i>
+            Кошик
+          </a>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link text-primary d-flex align-items-center rounded p-2" href="{% url 'product_list' %}">
+            <i class="fa-solid fa-house fa-sm me-2" style="padding:0.5px"></i>
+            Головна
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center rounded p-2" href="#">
+            <i class="fa-solid fa-blog me-2"></i>
+            Блог
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center  rounded p-2" href="{% url 'all_reviews' %}">
+            <i class="fa-solid fa-comments me-2"></i>
+            Відгуки
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center rounded p-2" href="#">
+            <i class="fa-solid fa-question-circle me-2"></i>
+            FAQ
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center rounded p-2" href="#">
+            <i class="fa-solid fa-phone" style="padding: 0.5px"></i>
+            Підтримка
+          </a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center rounded p-2" href="{% url 'user_profile' %}">
+            <i class="fa-regular fa-circle-user fa-lg me-2"></i>
+            Профіль
+          </a>
+        </li>
+        <form action="{% url 'logout' %}" method="POST" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-primary">Logout</button>
+        </form>
+        {% else %}
+        <li class="nav-item mt-2 mt-lg-0" style="padding: 5px">
+          <a href="{% url 'login' %}" class="btn btn-outline-primary me-2 w-100 w-lg-auto">
+            <i class="fa-solid fa-sign-in-alt me-2"></i>
+            Log in
+          </a>
+        </li>
+        <li class="nav-item mt-2 mt-lg-0" style="padding: 5px">
+          <a href="{% url 'register' %}" class="btn btn-primary w-100 w-lg-auto">
+            <i class="fa-solid fa-user-plus me-2"></i>
+            Register
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+</header>

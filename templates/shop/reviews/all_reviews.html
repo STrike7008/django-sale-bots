@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    {% if grouped_reviews %}
+    {% for product, reviews in grouped_reviews.items %}
+    <div class="mb-5">
+        <h3 class="text-primary">{{ product.name }}</h3>
+        <div class="row">
+            {% for review in reviews %}
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="media-heading" style="margin: 0;">
+                                {{ review.user.username }}
+                            </h4>
+                            <div class="review-rating" style="font-size: 1.2em; color: gold;">
+                                {% for i in review.stars_gold %}
+                                    <span class="fa fa-star"></span>
+                                {% endfor %}
+                                {% for i in review.stars_gray %}
+                                    <span class="fa fa-star" style="color: lightgray;"></span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <p style="text-align: left; font-size: 1em; color: #333;">{{ review.content }}</p>
+                        <div style="border-top: 1px solid #ccc; padding-top: 5px; text-align: right;">
+                            <small class="text-muted" style="opacity: 0.6;">
+                                {{ review.created_at|date:"d.m.Y" }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p class="text-center mt-4">Отзывов пока нет.</p>
+    {% endif %}
+</div>
+{% endblock %}

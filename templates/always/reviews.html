@@ -1,0 +1,33 @@
+{% if request.path != '/reviews/' %}
+    {% if reviews %}
+    <div class="card shadow-sm mt-4">
+        <div class="card-body">
+            <div style="padding: 5px;" class="media">
+                {% for review in reviews %}
+                <div class="media-body" style="padding: 15px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 15px; background-color: #f9f9f9;">
+                    <div class="d-flex justify-content-between">
+                        <h4 class="media-heading" style="margin: 0;">
+                            {{ review.user.username }}
+                        </h4>
+                        <div class="review-rating" style="font-size: 1.2em; color: gold;">
+                            {% for i in review.stars_gold %}
+                                <span class="fa fa-star"></span>
+                            {% endfor %}
+                            {% for i in review.stars_gray %}
+                                <span class="fa fa-star" style="color: lightgray;"></span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <p style="text-align: left; font-size: 1em; color: #333;">{{ review.content }}</p>
+                    <div style="border-top: 1px solid #ccc; padding-top: 5px; text-align: right;">
+                        <small class="text-muted" style="opacity: 0.6;">
+                            {{ review.created_at|date:"d.m.Y" }}
+                        </small>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endif %}

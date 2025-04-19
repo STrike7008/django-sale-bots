@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    {% if category %}{{ category.title }}{% else %}Продукти{% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-md-10 col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="text-center">
+                        <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %} {% endif %}" class="card-img-top" alt="{{ product.name }}">
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title text-center">{{ product.name }}</h1>
+                        <h2 class="text-center">
+                            <a href="{{ product.category.get_absolute_url }}" class="btn btn-link text-decoration-none">Категорія: {{ product.category }}</a>
+                        </h2>
+                        <p class="text-center price lead">${{ product.price }}</p>
+
+                        <div class="product-description text-center" style="font-size: 1.2em; margin-top: 20px;">
+                            <p>{{ product.description|linebreaks }}</p>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <form action="{% url 'cart:cart_add' product.id %}" method="post" class="form-inline">
+                            {% csrf_token %}
+                            <div style="padding:5px" class="form-group">
+                                {{ cart_product_form }}
+                            </div><br>
+                            <button type="submit" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Додати до кошику
+                            </button>
+                        </form>
+{% if user.is_authenticated %}
+                        <div class="well">
+    <h4 style="padding:15px">Залишити відгук:</h4>
+    <form role="form" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <textarea class="form-control" name="content" rows="3" placeholder="Ваш коментар"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="rating">Оцінка:</label>
+            <select class="form-control" name="rating" id="rating">
+                {% for i in "12345" %}
+                    <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Відправити</button>
+    </form>
+</div>
+{% endif %}
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
