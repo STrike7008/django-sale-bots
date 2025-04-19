@@ -26,7 +26,7 @@ class UserRegistrationForm(UserCreationForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['group']
+        fields = ['about', 'avatar']
 
 class SearchForm(forms.Form):
     query = forms.CharField(label='Пошук', required=False)

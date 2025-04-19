@@ -1,20 +1,25 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Мій профіль</h3>
+                    <h3 class="panel-title" style="padding: 0 0 15px 15px">Мій профіль</h3>
                 </div>
-                <div class="panel-body">
-                    <div class="list-group">
+                <div class="panel-body text-center">
+                    {% if profile.avatar %}
+                        <img src="{{ profile.avatar.url }}" class="img-circle" style="width: 300px; height: 300px;" alt="Avatar">
+                    {% endif %}
+                    <div class="list-group mt-3">
                         <p class="list-group-item"><strong>Ім'я:</strong> {{ user }}</p>
                         <p class="list-group-item"><strong>Email:</strong> {{ user.email }}</p>
-                        <p class="list-group-item"><strong>Група:</strong> {{ profile.group|default:"Не указано" }}</p>
+                        <p class="list-group-item"><strong>О собі:</strong> {{ profile.about|default:"Не указано" }}</p>
                     </div>
-                    <a href="{% url 'update_profile' %}" class="btn btn-primary">Редагувати профіль</a>
+                    <div style="padding:10px">
+                        <a href="{% url 'update_profile' %}" class="btn btn-primary">Редагувати профіль</a>
+                    </div>
                 </div>
             </div>
         </div>

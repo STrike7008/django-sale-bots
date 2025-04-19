@@ -82,22 +82,18 @@ def user_profile(request):
 @login_required
 def update_profile(request):
     user = request.user
-    try:
-        profile = user.userprofile
-    except UserProfile.DoesNotExist:
-        profile = UserProfile.objects.create(user=user)
+    profile, created = UserProfile.objects.get_or_create(user=user)
 
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=profile)
+        form = UserProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
             return redirect('user_profile')
     else:
         form = UserProfileForm(instance=profile)
 
-    context = {'form': form}
-    context.update(get_categories())
-    return render(request, "registration/update_profile.html", context)
+    return render(request, "registration/update_profile.html", {'form': form})
+
 
 
 def search(request):
@@ -115,15 +111,19 @@ def search(request):
 
 from itertools import groupby
 
+
 def all_reviews(request):
     reviews = ProductReview.objects.select_related('product', 'user').order_by('product', '-created_at')
     grouped_reviews = {
         product: list(reviews) for product, reviews in groupby(reviews, key=lambda x: x.product)
     }
+
     for review in reviews:
         review.stars_gold = range(review.rating)
         review.stars_gray = range(5 - review.rating)
 
+        user_profile = UserProfile.objects.get(user=review.user)
+        review.user_avatar = user_profile.avatar.url if user_profile.avatar else None
 
     context = {"grouped_reviews": grouped_reviews}
     return render(request, 'shop/reviews/all_reviews.html', context)

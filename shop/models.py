@@ -2,9 +2,11 @@ import os
 
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models.signals import post_delete
+from django.db.models.signals import post_delete, pre_delete
 from django.dispatch import receiver
 from django.urls import reverse
+from PIL import Image
+
 
 class Category(models.Model):
     name = models.CharField(max_length=30, verbose_name="Назва")
@@ -58,10 +60,32 @@ def delete_product_image(sender, instance, **kwargs):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    group = models.CharField(max_length=30, blank=True)
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
+    about = models.CharField(max_length=100, blank=True, null=True)
 
-    def __str__(self):
-        return f"Профіль: {self.user.username}"
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        try:
+            if self.avatar:
+                img = Image.open(self.avatar.path)
+                if img.height > 300 or img.width > 300:
+                    output_size = (300, 300)
+                    img.thumbnail(output_size)
+                    img.save(self.avatar.path)
+        except Exception as e:
+            print(e)
+
+    def delete_avatar(self):
+        if self.avatar:
+            if os.path.isfile(self.avatar.path):
+                os.remove(self.avatar.path)
+            self.avatar = None
+            self.save()
+
+@receiver(pre_delete, sender=UserProfile)
+def delete_avatar_on_profile_delete(sender, instance, **kwargs):
+    if instance.avatar and os.path.isfile(instance.avatar.path):
+        os.remove(instance.avatar.path)
 
 
 class ProductReview(models.Model):
