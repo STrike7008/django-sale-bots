@@ -35,41 +35,7 @@
             </div>
 
             <!-- SideBar -->
-            <div class="col-md-4">
-                <div class="sidebar-sticky">
-                    <div class="card shadow-sm mb-4">
-                        <div class="card-body">
-                            <h4 class="card-title title-font">Пошук</h4>
-                            <form action="/search" method="GET" class="input-group">
-                                <input type="search" name="query" class="form-control" placeholder="Search...">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </form>
-                            <p style="padding: 5px; font-size: 80%;" class="title-font">Знайди конкретний товар, який тебе цікавить.</p>
-                        </div>
-                    </div>
-
-<div class="card shadow-sm">
-    <div class="card-body">
-        <h4 class="card-title title-font">Категоріі</h4>
-        <div class="row">
-            <div class="col-6 mb-2">
-                <a href="{% url 'product_list' %}" class="text-decoration-none text-primary {% if not category %}selected{% endif %}">
-                    Всі товари
-                </a>
-            </div>
-            {% for c in categories %}
-            <div class="col-6 mb-2">
-                <a href="{{ c.get_absolute_url }}" class="text-decoration-none text-primary {% if category.slug == c.slug %}selected{% endif %}">
-                    {{ c.name }}
-                </a>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</div>
-
+            {% include 'always/sidebar.html' %}
 
 {% include 'always/reviews.html' %}
 
