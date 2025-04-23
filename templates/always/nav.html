@@ -41,9 +41,9 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link d-flex align-items-center rounded p-2" href="#">
+          <a class="nav-link d-flex align-items-center rounded p-2" href="{% url 'chat:chat' %}">
             <i class="fa-solid fa-phone" style="padding: 0.5px"></i>
-            Підтримка
+            Спільнота
           </a>
         </li>
         {% if user.is_authenticated %}
