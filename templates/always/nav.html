@@ -1,6 +1,6 @@
 <header class="bg-white shadow-sm">
   <nav class="navbar navbar-expand-lg navbar-light container">
-    <a class="navbar-brand d-flex align-items-center" href="#">
+    <a class="navbar-brand d-flex align-items-center" href="{% url 'product_list' %}">
       <i class="fa-solid fa-robot fa-xl text-primary"></i>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -40,12 +40,14 @@
             FAQ
           </a>
         </li>
+        {% if user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link d-flex align-items-center rounded p-2" href="{% url 'chat:chat' %}">
             <i class="fa-solid fa-phone" style="padding: 0.5px"></i>
             Спільнота
           </a>
         </li>
+        {% endif %}
         {% if user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link d-flex align-items-center rounded p-2" href="{% url 'user_profile' %}">
