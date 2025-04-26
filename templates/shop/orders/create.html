@@ -2,41 +2,42 @@
 {% load static %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3>Ваше замовлення</h3>
-                    {% with total_items=cart|length %}
-                    {% if total_items > 0 %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h3 class="mb-0">Ваше замовлення</h3>
                 </div>
-                <div class="panel-body">
-                    <ul class="list-group">
+                {% with total_items=cart|length %}
+                {% if total_items > 0 %}
+                <div class="card-body">
+                    <ul class="list-group mb-3">
                         {% for item in cart %}
                         <li class="list-group-item">
-                            {{ item.quantity }} x {{ item.product.name }}
-                            <span class="badge">${{ item.total_price }}</span>
+                            <b>{{ item.product.name }}</b>
                         </li>
                         {% endfor %}
                     </ul>
                     <hr>
-                    <p><strong>Total: ${{ cart.get_total_price }}</strong></p>
+                    <p><strong>Загальна сума: ${{ cart.get_total_price }}</strong></p>
                     <form action="." method="POST" role="form">
                         {% csrf_token %}
                         <div class="form-group">
                             {{ form.as_p }}
-                            <p class="form-text text-muted">у 'Description' вкажіть деталі які ви бажаєте бачити у сайті/tool/боті</p>
+                            <p class="form-text text-muted">У 'Description' вкажіть деталі, які ви бажаєте бачити у сайті/tool/боті</p>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Підтвердити</button>
                     </form>
-                    {% else %}
-                    <i class="fa-solid fa-thumbs-down" style="font-size: 1rem;"></i>
-                    <b>У вас немає товарів</b>
-                    <a href="{% url 'product_list' %}" class="btn btn-outline-primary" style="margin-top: 15px;">Продовжити покупки</a>
-                    {% endif %}
-                    {% endwith %}
                 </div>
+                {% else %}
+                <div class="card-body text-center">
+                    <i class="fa-solid fa-thumbs-down" style="font-size: 2rem;"></i>
+                    <h5 class="mt-3">У вас немає товарів</h5>
+                    <a href="{% url 'product_list' %}" class="btn btn-outline-primary mt-3">Продовжити покупки</a>
+                </div>
+                {% endif %}
+                {% endwith %}
             </div>
         </div>
     </div>

@@ -46,12 +46,17 @@ def product_detail(request, id, slug):
     for review in reviews:
         review.stars_gold = range(review.rating)
         review.stars_gray = range(5 - review.rating)
+        try:
+            review.user_profile = UserProfile.objects.get(user=review.user)
+        except UserProfile.DoesNotExist:
+            review.user_profile = None
 
     context = {
         "product": product,
         "reviews": reviews,
         "review_form": review_form,
         "cart_product_form": CartAddProductForm(),
+        "user": request.user
     }
     return render(request, "shop/detail.html", context)
 

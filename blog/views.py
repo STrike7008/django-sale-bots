@@ -21,7 +21,6 @@ def blog(request):
     return render(request, "blog/index.html", context)
 
 def blog_post(request, title):
-    profile, created = UserProfile.objects.get_or_create(user=request.user)
     post = get_object_or_404(Post, slug=title)
     comments = Comment.objects.filter(post=post).order_by('-created_at')
     if request.method == 'POST':
@@ -34,6 +33,17 @@ def blog_post(request, title):
             return redirect('post', title=title)
     else:
         comment_form = CommentForm()
+
+    for comment in comments:
+        try:
+            comment.user_profile = UserProfile.objects.get(user=comment.user)
+        except UserProfile.DoesNotExist:
+            comment.user_profile = None
+
+    try:
+        profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        profile = None
 
     context = {
         'post': post,
