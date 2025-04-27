@@ -11,7 +11,6 @@ urlpatterns = [
     path('update-profile/', views.update_profile, name='update_profile'),
     path('register/', views.register, name='register'),
     path("search/", views.search, name="search"),
-    path('reviews/', views.all_reviews, name='all_reviews'),
     path("<slug:category_slug>/", views.product_list, name="product_list_by_category"),
     path("<int:id>/<slug:slug>/", views.product_detail, name="product_detail"),
 ]

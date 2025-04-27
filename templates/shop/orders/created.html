@@ -2,7 +2,12 @@
 {% load static %}
 
 {% block content %}
-<h1>Ваше замовлення успішно виконано! Номер вашого замовлення: <strong>{{ order.id }}</strong></h1>
-<p style="opacity: 0.5;">Вам на email прийшов номер вашого замовлення!</p>
-
+    <div style="max-width: 600px; margin: 0 auto; background-color: #fff; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 20px;">
+        <h2 style="font-size: 24px; color: #333; text-align: center;">Ваше замовлення успішно прийнято</h2>
+        <p style="font-size: 18px; color: #333;">Доброго дня <b>{{ order.first_name }}</b>!</p>
+        <p style="font-size: 18px; color: #333;">Ваш номер замовлення: <strong>{{ order.id }}</strong>.</p>
+        <i style="font-size: 18px; color: #666;">Деталі дивіться на своєму email({{ email }})...</i>
+        <p style="font-size: 18px; color: #333;">Дякуємо, що ви з нами!</p>
+        <p style="font-size: 18px; color: #333;">З повагою, <b>Sale-bots!</b></p>
+    </div>
 {% endblock %}

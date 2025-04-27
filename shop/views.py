@@ -112,23 +112,3 @@ def search(request):
     }
     context.update(get_categories())
     return render(request, "shop/list.html", context)
-
-
-from itertools import groupby
-
-
-def all_reviews(request):
-    reviews = ProductReview.objects.select_related('product', 'user').order_by('product', '-created_at')
-    grouped_reviews = {
-        product: list(reviews) for product, reviews in groupby(reviews, key=lambda x: x.product)
-    }
-
-    for review in reviews:
-        review.stars_gold = range(review.rating)
-        review.stars_gray = range(5 - review.rating)
-
-        user_profile = UserProfile.objects.get(user=review.user)
-        review.user_avatar = user_profile.avatar.url if user_profile.avatar else None
-
-    context = {"grouped_reviews": grouped_reviews}
-    return render(request, 'shop/reviews/all_reviews.html', context)

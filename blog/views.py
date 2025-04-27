@@ -1,9 +1,8 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import AnonymousUser
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
-from django.utils.timezone import now
 from .models import Post, Category, Comment
-from .forms import  CommentForm
+from .forms import CommentForm
 from shop.models import UserProfile
 
 def blog_get_categories():
@@ -20,19 +19,19 @@ def blog(request):
     context.update(blog_get_categories())
     return render(request, "blog/index.html", context)
 
+
 def blog_post(request, title):
     post = get_object_or_404(Post, slug=title)
     comments = Comment.objects.filter(post=post).order_by('-created_at')
-    if request.method == 'POST':
-        comment_form = CommentForm(request.POST)
+    comment_form = CommentForm(request.POST) if request.method == "POST" else CommentForm()
+
+    if request.user.is_authenticated and request.method == "POST":
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
             comment.post = post
             comment.user = request.user
             comment.save()
             return redirect('post', title=title)
-    else:
-        comment_form = CommentForm()
 
     for comment in comments:
         try:
@@ -40,10 +39,13 @@ def blog_post(request, title):
         except UserProfile.DoesNotExist:
             comment.user_profile = None
 
-    try:
-        profile = UserProfile.objects.get(user=request.user)
-    except UserProfile.DoesNotExist:
+    if isinstance(request.user, AnonymousUser):
         profile = None
+    else:
+        try:
+            profile = UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            profile = None
 
     context = {
         'post': post,
@@ -51,7 +53,6 @@ def blog_post(request, title):
         'comment_form': comment_form,
         'profile': profile,
         'user': request.user
-
     }
     context.update(blog_get_categories())
     return render(request, "blog/post.html", context)

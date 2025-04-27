@@ -51,7 +51,13 @@
         {% if user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link d-flex align-items-center rounded p-2" href="{% url 'user_profile' %}">
+            {% with profile=request.user.userprofile %}
+        {% if profile.avatar %}
+            <img src="{{ profile.avatar.url }}" class="rounded-circle" style="width: 20px; height: 20px; margin-right: 3px;">
+        {% else %}
             <i class="fa-regular fa-circle-user fa-lg me-2"></i>
+        {% endif %}
+    {% endwith %}
             Профіль
           </a>
         </li>

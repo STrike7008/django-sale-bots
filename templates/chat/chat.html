@@ -18,7 +18,7 @@
                 <form method="POST">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <textarea class="form-control" id="id_message_text" name="message_text" rows="3" required></textarea>
+                        <textarea placeholder="Ваш нік: '{{ user }}'..." class="form-control" id="id_message_text" name="message_text" rows="3" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Отправить</button>
                 </form>

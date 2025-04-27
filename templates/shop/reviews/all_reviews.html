@@ -13,7 +13,10 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
-                            <h4 class="media-heading" style="margin: 0;">
+                            {% if review.user_profile and review.user_profile.avatar %}
+                                <img src="{{ review.user_profile.avatar.url }}" alt="Avatar" class="rounded-circle" width="40" height="40" style="object-fit: cover;">
+                            {% endif %}
+                            <h4 class="media-heading" style="margin: 0; margin-right: 60px;">
                                 {{ review.user.username }}
                             </h4>
                             <div class="review-rating" style="font-size: 1.2em; color: gold;">

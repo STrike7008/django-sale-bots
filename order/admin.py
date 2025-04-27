@@ -11,6 +11,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'first_name', 'last_name', 'email', 'description', 'paid', 'created', 'updated']
     list_filter = ['paid', 'created', 'updated']
     inlines = [OrderInline]
+    list_editable = ('paid',)
 
 
 admin.site.register(Order, OrderAdmin)

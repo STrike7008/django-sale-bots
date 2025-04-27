@@ -4,6 +4,7 @@ from .models import Message
 
 @login_required
 def chat_view(request):
+    user = request.user
     if request.method == 'POST':
         user_name = request.user.username
         message_text = request.POST.get('message_text')
@@ -15,4 +16,4 @@ def chat_view(request):
             return redirect('chat:chat')
 
     messages = Message.objects.all().order_by('created_at')
-    return render(request, 'chat/chat.html', {'messages': messages})
+    return render(request, 'chat/chat.html', {'messages': messages, "user": user})
