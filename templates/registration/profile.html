@@ -8,9 +8,18 @@
                 <div class="panel-heading">
                     <h3 class="panel-title" style="padding: 0 0 15px 15px">Мій профіль</h3>
                 </div>
-                <div class="panel-body text-center">
+                <style>
+                    .div2 {
+                        transition: border-radius 0.6s ease-in-out;
+                            }
+
+                    .div2:hover {
+                        border-radius: 50%;
+                    }
+                </style>
+                <div class="panel-body text-center div2">
                     {% if profile.avatar %}
-                        <img src="{{ profile.avatar.url }}" class="img-circle" style="width: 300px; height: 300px;" alt="Avatar">
+                        <img src="{{ profile.avatar.url }}" class="img-circle div2" style="width: 300px; height: 300px;" alt="Avatar">
                     {% endif %}
                     <div class="list-group mt-3">
                         <p class="list-group-item"><strong>Ім'я:</strong> {{ user }}</p>

@@ -1,3 +1,8 @@
+<style>
+.how:hover {
+    color: #0d6efd;
+}
+</style>
 <header class="bg-white shadow-sm">
   <nav class="navbar navbar-expand-lg navbar-light container">
     <a class="navbar-brand d-flex align-items-center" href="{% url 'product_list' %}">
@@ -10,39 +15,39 @@
       <ul class="navbar-nav ms-auto align-items-lg-center w-100 justify-content-lg-end">
         {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'cart:cart_detail' %}">
+          <a class="nav-link how" href="{% url 'cart:cart_detail' %}">
             <i class="fa-solid fa-cart-shopping fa-fade" style="animation-duration: 2s;"></i>
             Кошик
           </a>
         </li>
         {% endif %}
         <li class="nav-item">
-          <a class="nav-link text-primary d-flex align-items-center rounded p-2" href="{% url 'product_list' %}">
+          <a class="nav-link how d-flex align-items-center rounded p-2" href="{% url 'product_list' %}">
             <i class="fa-solid fa-house fa-sm me-2" style="padding:0.5px"></i>
             Головна
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link d-flex align-items-center rounded p-2" href="{% url 'blog' %}">
+          <a class="nav-link d-flex align-items-center rounded p-2 how" href="{% url 'blog' %}">
             <i class="fa-solid fa-blog me-2"></i>
             Блог
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link d-flex align-items-center  rounded p-2" href="{% url 'all_reviews' %}">
+          <a class="nav-link d-flex align-items-center rounded p-2 how" href="{% url 'all_reviews' %}">
             <i class="fa-solid fa-comments me-2"></i>
             Відгуки
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link d-flex align-items-center rounded p-2" href="{% url 'faq' %}">
+          <a class="nav-link d-flex align-items-center rounded p-2 how" href="{% url 'faq' %}">
             <i class="fa-solid fa-question-circle me-2"></i>
             FAQ
           </a>
         </li>
         {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link d-flex align-items-center rounded p-2" href="{% url 'chat:chat' %}">
+          <a class="nav-link d-flex align-items-center rounded p-2 how" href="{% url 'chat:chat' %}">
             <i class="fa-solid fa-phone" style="padding: 0.5px"></i>
             Спільнота
           </a>
@@ -50,7 +55,7 @@
         {% endif %}
         {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link d-flex align-items-center rounded p-2" href="{% url 'user_profile' %}">
+          <a class="nav-link d-flex align-items-center rounded p-2 how" href="{% url 'user_profile' %}">
             {% with profile=request.user.userprofile %}
         {% if profile.avatar %}
             <img src="{{ profile.avatar.url }}" class="rounded-circle" style="width: 20px; height: 20px; margin-right: 3px;">

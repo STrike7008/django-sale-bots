@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div class="text-center">
+        <h1 class="display-4 text-danger">404</h1>
+        <h2 class="mb-3">Пользователь не найден</h2>
+        <p class="text-muted mb-4">Похоже, такого пользователя не существует или он был удалён.</p>
+        <a href="{% url 'product_list' %}" class="btn btn-primary btn-lg">Вернуться на главную</a>
+    </div>
+{% endblock %}
