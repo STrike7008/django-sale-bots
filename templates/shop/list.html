@@ -11,6 +11,15 @@
             Products
         {% endif %}
     </h1>
+    {% if broadcast %}
+    <div class="alert alert-info alert-dismissible fade show" role="alert" style="font-size: 18px;">
+        {{ broadcast.message|safe }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+
+
+
 
     <div class="row">
         {% for product in products %}

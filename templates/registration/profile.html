@@ -17,14 +17,16 @@
                         border-radius: 50%;
                     }
                 </style>
-                <div class="panel-body text-center div2">
+                <div class="panel-body text-center">
                     {% if profile.avatar %}
                         <img src="{{ profile.avatar.url }}" class="img-circle div2" style="width: 300px; height: 300px;" alt="Avatar">
                     {% endif %}
-                    <div class="list-group mt-3">
-                        <p class="list-group-item"><strong>Ім'я:</strong> {{ user }}</p>
-                        <p class="list-group-item"><strong>Email:</strong> {{ user.email }}</p>
-                        <p class="list-group-item"><strong>О собі:</strong> {{ profile.about|default:"Не указано" }}</p>
+                    <div class="list-group mt-3 list-group-item">
+                        <p><strong>Ім'я:</strong> {{ user }}</p>
+                        <hr style="border: 1px solid #eee; margin: 10px 0;">
+                        <p><strong>Email:</strong> {{ user.email }}</p>
+                        <hr style="border: 1px solid #eee; margin: 10px 0;">
+                        <p><strong>О собі:</strong> {{ profile.about|default:"Не указано" }}</p>
                     </div>
                     <div style="padding:10px">
                         <a href="{% url 'update_profile' %}" class="btn btn-primary">Редагувати профіль</a>

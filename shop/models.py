@@ -34,7 +34,6 @@ class Product(models.Model):
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    stock = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ('name',)
@@ -101,3 +100,21 @@ class ProductReview(models.Model):
     class Meta:
         verbose_name = "Відгук"
         verbose_name_plural = "Відгуки"
+
+
+class BroadcastMessage(models.Model):
+    message = models.TextField()
+    active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if self.active:
+            BroadcastMessage.objects.filter(active=True).update(active=False)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.message[:20]}..." if len(self.message) > 20 else self.message
+
+    class Meta:
+        verbose_name = "Реклама"
+        verbose_name_plural = "Реклама"

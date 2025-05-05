@@ -8,3 +8,7 @@ class Message(models.Model):
 
     def __str__(self):
         return f'{self.user_name}: {self.message_text}'
+
+    class Meta:
+        verbose_name = "Повідомлення"
+        verbose_name_plural = "Повідомлення"
