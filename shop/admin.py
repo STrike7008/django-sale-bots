@@ -10,9 +10,9 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'image_tag', 'description', 'price', 'available', 'created', 'updated']
+    list_display = ['name', 'slug', 'image_tag', 'description', 'price', 'discount_price', 'available', 'created', 'updated']
     list_filter = ['available', 'created', 'updated']
-    list_editable = ['price', 'available']
+    list_editable = ['price', 'available', 'discount_price']
     prepopulated_fields = {'slug': ('name',)}
 
     def image_tag(self, obj):

@@ -31,6 +31,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products', blank=True)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    discount_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -48,6 +49,9 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('product_detail', args=[self.id, self.slug])
+
+    def get_price(self):
+        return self.discount_price if self.discount_price else self.price
 
 
 @receiver(post_delete, sender=Product)
@@ -104,6 +108,7 @@ class ProductReview(models.Model):
 
 class BroadcastMessage(models.Model):
     message = models.TextField()
+    image = models.ImageField(upload_to='broadcasts/', null=True, blank=True)
     active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -118,3 +123,10 @@ class BroadcastMessage(models.Model):
     class Meta:
         verbose_name = "Реклама"
         verbose_name_plural = "Реклама"
+
+
+@receiver(post_delete, sender=BroadcastMessage)
+def delete_broadcast_image(sender, instance, **kwargs):
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)

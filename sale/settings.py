@@ -146,13 +146,3 @@ THUMBNAIL_ALIASES = {
 
 
 CART_SESSION_ID = 'card'
-
-
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.ukr.net'
-EMAIL_PORT = 465
-EMAIL_USE_SSL = True
-EMAIL_HOST_USER = 'sale-bots@ukr.net'
-EMAIL_HOST_PASSWORD = 'ZMF9L8Rr4zqLiXgK'
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
