@@ -17,7 +17,14 @@
                         <h2 class="text-center">
                             <a href="{{ product.category.get_absolute_url }}" class="btn btn-link text-decoration-none">Категорія: {{ product.category }}</a>
                         </h2>
-                        <p class="text-center price lead">${{ product.price }}</p>
+                        <p class="text-center price lead">
+                            {% if product.discount_price %}
+                                    <span style="text-decoration: line-through; color: #888;">$ {{ product.price }}</span>
+                                    <span style="color: #e74c3c;">$ {{ product.discount_price }}</span>
+                                {% else %}
+                                    $ {{ product.price }}
+                                {% endif %}
+                        </p>
                         <div class="product-description text-center" style="font-size: 1.2em; margin-top: 20px;">
                             <p>{{ product.description|linebreaks }}</p>
                         </div>
