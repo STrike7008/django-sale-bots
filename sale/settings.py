@@ -63,7 +63,7 @@ ROOT_URLCONF = 'sale.urls'
 import os
 TEMPLATES_DIRS = os.path.join(BASE_DIR, "templates")
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 TEMPLATES = [
